@@ -1,5 +1,6 @@
 package com.example.oopprojekt.src.ui;
 
+import com.example.oopprojekt.src.ui.dialogs.AlertBox;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
@@ -10,16 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import ui.dialogs.AlertBox;
 
 public class MainFX extends Application {
-
-    private static final String BUTTON_STYLE_BASE = """
-        -fx-background-color: #995FA3;
-        -fx-text-fill: white;
-        -fx-font-weight: bold;
-        -fx-background-radius: 10;
-        """;
 
     @Override
     public void start(Stage primaryStage) {
@@ -33,33 +26,42 @@ public class MainFX extends Application {
     }
 
     public Scene createMainScene(Stage primaryStage) {
+        // Labels
         Label welcomeLabel = new Label("Hi! Welcome to your relationship diary!");
-        Label questionLabel = new Label("What would you like to do?");
+        welcomeLabel.getStyleClass().add("title-label");
 
+        Label questionLabel = new Label("What would you like to do?");
+        questionLabel.getStyleClass().add("question-label");
+
+        // Buttons
         Button manageEntriesButton = new Button("Manage Entries");
         Button manageIdeasButton = new Button("Manage Ideas");
         Button quitButton = new Button("Quit");
 
         Button[] buttons = {manageEntriesButton, manageIdeasButton, quitButton};
+        for (Button btn : buttons) {
+            btn.getStyleClass().add("menu-button");
+        }
 
-        HBox buttonRow = new HBox();
-        buttonRow.getChildren().addAll(buttons);
+        // Layouts
+        HBox buttonRow = new HBox(10, manageEntriesButton, manageIdeasButton, quitButton);
         buttonRow.setAlignment(Pos.CENTER);
 
-        VBox centerBox = new VBox();
-        centerBox.getChildren().addAll(questionLabel, buttonRow);
+        VBox centerBox = new VBox(20, questionLabel, buttonRow);
         centerBox.setAlignment(Pos.CENTER);
 
-        VBox contentBox = new VBox();
-        contentBox.getChildren().addAll(welcomeLabel, centerBox);
+        VBox contentBox = new VBox(30, welcomeLabel, centerBox);
         contentBox.setAlignment(Pos.TOP_CENTER);
 
         VBox root = new VBox(contentBox);
         root.setAlignment(Pos.TOP_CENTER);
-        root.setStyle("-fx-background-color: linear-gradient(to right, #A7C7E7, #F7C6C7);");
+        root.getStyleClass().add("root-background");
 
+        // Scene
         Scene scene = new Scene(root, 1000, 800);
+        scene.getStylesheets().add(getClass().getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm());
 
+        // Responsive font sizes
         welcomeLabel.styleProperty().bind(
                 Bindings.concat("-fx-font-size: ", scene.heightProperty().divide(20).asString(), "px;")
         );
@@ -67,28 +69,32 @@ public class MainFX extends Application {
                 Bindings.concat("-fx-font-size: ", scene.heightProperty().divide(30).asString(), "px;")
         );
 
+        // Responsive spacing/padding
         contentBox.spacingProperty().bind(scene.heightProperty().multiply(0.1));
         centerBox.spacingProperty().bind(scene.heightProperty().multiply(0.06));
         buttonRow.spacingProperty().bind(scene.widthProperty().multiply(0.02));
+
         centerBox.paddingProperty().bind(Bindings.createObjectBinding(() ->
                 new Insets(scene.heightProperty().get() * 0.05, 0, 0, 0), scene.heightProperty()));
         root.paddingProperty().bind(Bindings.createObjectBinding(() ->
                 new Insets(scene.heightProperty().get() * 0.15, 0, 0, 0), scene.heightProperty()));
 
         for (Button btn : buttons) {
-            btn.styleProperty().bind(Bindings.concat(
-                    BUTTON_STYLE_BASE,
-                    "-fx-font-size: ",
-                    scene.heightProperty().divide(60).asString(),
-                    "px;"));
             btn.prefWidthProperty().bind(scene.widthProperty().multiply(0.12));
             btn.prefHeightProperty().bind(scene.heightProperty().multiply(0.045));
         }
 
+        // Button actions
         manageEntriesButton.setOnAction(e -> AlertBox.show(primaryStage, "Manage Entries", "Opening Manage Entries GUI... (implement this)"));
         manageIdeasButton.setOnAction(e -> {
             ManageIdeasUI ideasUI = new ManageIdeasUI();
-            Scene ideaScene = new Scene(ideasUI.createManageIdeasPane(primaryStage), 1000, 800);
+            VBox ideasRoot = ideasUI.createManageIdeasPane(primaryStage);
+
+            Scene ideaScene = new Scene(ideasRoot, primaryStage.getScene().getWidth(), primaryStage.getScene().getHeight());
+            ideaScene.getStylesheets().add(getClass().getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm());
+            ideasRoot.paddingProperty().bind(Bindings.createObjectBinding(() ->
+                    new Insets(ideaScene.heightProperty().get() * 0.15, 0, 0, 0), ideaScene.heightProperty()));
+
             primaryStage.setScene(ideaScene);
         });
         quitButton.setOnAction(e -> primaryStage.close());

@@ -4,5 +4,5 @@ module com.example.oopprojekt {
 
 
     opens com.example.oopprojekt to javafx.fxml;
-    exports com.example.oopprojekt;
+    exports com.example.oopprojekt.src.ui;
 }

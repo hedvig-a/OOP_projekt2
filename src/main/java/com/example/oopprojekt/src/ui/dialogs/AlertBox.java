@@ -1,6 +1,7 @@
 package com.example.oopprojekt.src.ui.dialogs;
 
-import javafx.geometry.Insets;
+import com.example.oopprojekt.src.ui.components.Buttons;
+import com.example.oopprojekt.src.ui.utils.DialogUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -8,23 +9,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import ui.components.Buttons;
-import ui.utils.DialogUtils;
-
 public class AlertBox {
 
     public static void show(Stage owner, String title, String message) {
-        Stage dialog = new Stage(StageStyle.TRANSPARENT);
-        dialog.initOwner(owner);
-        dialog.initModality(javafx.stage.Modality.APPLICATION_MODAL);
-        dialog.setTitle(title);
+        Stage dialog = DialogUtils.createDialogStage(owner, title);
 
-        VBox vbox = new VBox(15);
-        vbox.setPadding(new Insets(25));
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setStyle(DialogUtils.DIALOG_BG_STYLE +
-                "-fx-border-color: #995FA3; -fx-border-width: 2;");
+        VBox vbox = DialogUtils.createDialogVBox();
+        vbox.setSpacing(15);
 
         Label label = DialogUtils.createLabel(message);
         label.setWrapText(true);
@@ -38,6 +29,7 @@ public class AlertBox {
 
         Scene scene = new Scene(vbox);
         scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add(AlertBox.class.getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm()); // Ensure CSS is applied
 
         dialog.setScene(scene);
         dialog.showAndWait();

@@ -1,5 +1,9 @@
 package com.example.oopprojekt.src.ui.dialogs;
 
+import com.example.oopprojekt.src.model.Idea;
+import com.example.oopprojekt.src.model.IdeaGenerator;
+import com.example.oopprojekt.src.ui.components.Buttons;
+import com.example.oopprojekt.src.ui.utils.DialogUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,10 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Idea;
-import model.IdeaGenerator;
-import ui.components.Buttons;
-import ui.utils.DialogUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -31,11 +31,11 @@ public class RandomIdeaDialog {
         VBox vbox = new VBox(15);
         vbox.setAlignment(Pos.CENTER_LEFT);
         vbox.setPadding(new Insets(20));
-        vbox.setStyle(DialogUtils.DIALOG_BG_STYLE);
+        vbox.getStyleClass().add("dialog-bg");
 
         Label ideaLabel = new Label(randomIdea.toString());
         ideaLabel.setWrapText(true);
-        ideaLabel.setStyle(DialogUtils.TEXT_STYLE);
+        ideaLabel.getStyleClass().add("dialog-text");
 
         Button saveBtn = Buttons.create("Save Idea", e -> {
             boolean saved = generator.addIdea(randomIdea.getActivity(), randomIdea.getCategory(), randomIdea.getDescription());
@@ -50,7 +50,9 @@ public class RandomIdeaDialog {
 
         vbox.getChildren().addAll(ideaLabel, buttons);
 
-        dialog.setScene(new Scene(vbox, 450, 250));
-        dialog.showAndWait();
+        Scene scene = new Scene(vbox, 450, 250);
+        scene.getStylesheets().add(RandomIdeaDialog.class.getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm());
+        dialog.setScene(scene);
+
     }
 }

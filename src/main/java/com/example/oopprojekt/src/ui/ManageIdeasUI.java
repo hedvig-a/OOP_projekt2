@@ -1,13 +1,14 @@
 package com.example.oopprojekt.src.ui;
 
+import com.example.oopprojekt.src.model.IdeaGenerator;
+import com.example.oopprojekt.src.ui.components.Buttons;
+import com.example.oopprojekt.src.ui.dialogs.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.IdeaGenerator;
-import ui.components.Buttons;
-import ui.dialogs.*;
 
 import java.util.List;
 
@@ -15,15 +16,12 @@ public class ManageIdeasUI {
     private final IdeaGenerator ideaGenerator = new IdeaGenerator();
 
     public VBox createManageIdeasPane(Stage primaryStage) {
-        // Inner content pane
-        VBox ideasPane = new VBox(15);
-        ideasPane.setAlignment(Pos.CENTER);
-        ideasPane.setPadding(new Insets(25));
-
+        // Title
         Label title = new Label("Manage Ideas");
-        title.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #3D1766;");
+        title.getStyleClass().add("title-label");
 
-        List buttons = List.of(
+        // Buttons
+        List<Button> buttons = List.of(
                 Buttons.create("Add New Idea", e -> AddIdeaDialog.show(primaryStage, ideaGenerator)),
                 Buttons.create("Get Random Idea", e -> RandomIdeaDialog.show(primaryStage, ideaGenerator)),
                 Buttons.create("View Saved Ideas", e -> ListDialog.show(primaryStage, "Saved Ideas", ideaGenerator.getFilteredIdeas("saved"))),
@@ -42,12 +40,24 @@ public class ManageIdeasUI {
                 })
         );
 
-        ideasPane.getChildren().add(title);
-        ideasPane.getChildren().addAll(buttons);
+        // Apply common style class
+        for (Button button : buttons) {
+            button.getStyleClass().add("menu-button");
+        }
+        VBox buttonsBox = new VBox(20);
+        buttonsBox.getChildren().addAll(buttons);
+        buttonsBox.setAlignment(Pos.CENTER);
+        VBox.setMargin(buttonsBox, new Insets(40, 0, 0, 0));
+
+        // Main layout
+        VBox ideasPane = new VBox(20);
+        ideasPane.setAlignment(Pos.TOP_CENTER);
+        ideasPane.getChildren().addAll(title, buttonsBox);
+        ideasPane.setPadding(new Insets(25));
 
         VBox root = new VBox(ideasPane);
-        root.setAlignment(Pos.CENTER);
-        root.setStyle("-fx-background-color: linear-gradient(to right, #A7C7E7, #F7C6C7);");
+        root.setAlignment(Pos.TOP_CENTER);
+        root.getStyleClass().add("root-background");
         root.setPadding(new Insets(50));
 
         return root;

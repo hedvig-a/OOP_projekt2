@@ -1,14 +1,14 @@
 package com.example.oopprojekt.src.ui.dialogs;
 
+import com.example.oopprojekt.src.model.IdeaGenerator;
+import com.example.oopprojekt.src.ui.components.Buttons;
+import com.example.oopprojekt.src.ui.utils.DialogUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.IdeaGenerator;
-import ui.components.Buttons;
-import ui.utils.DialogUtils;
 
 public class AddIdeaDialog {
 
@@ -53,7 +53,10 @@ public class AddIdeaDialog {
 
         vbox.getChildren().addAll(activityLabel, activityField, categoryLabel, categoryBox, descLabel, descriptionArea, buttons);
 
-        dialog.setScene(new Scene(vbox, 400, 400));
+        Scene scene = new Scene(vbox, 400, 400);
+        scene.getStylesheets().add(RandomIdeaDialog.class.getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm());
+        dialog.setScene(scene);
         dialog.showAndWait();
+
     }
 }

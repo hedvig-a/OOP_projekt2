@@ -1,6 +1,7 @@
 package com.example.oopprojekt.src.ui.dialogs;
 
-import javafx.geometry.Insets;
+import com.example.oopprojekt.src.ui.components.Buttons;
+import com.example.oopprojekt.src.ui.utils.DialogUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import ui.components.Buttons;
-import ui.utils.DialogUtils;
 
 import java.util.function.Consumer;
 
@@ -19,13 +18,13 @@ public class TextInputDialogBox {
     public static void show(Stage owner, String title, String header, Consumer<String> onConfirm) {
         Stage dialog = DialogUtils.createDialogStage(owner, title);
 
-        VBox vbox = new VBox(12);
-        vbox.setPadding(new Insets(20));
-        vbox.setStyle(DialogUtils.DIALOG_BG_STYLE);
+        VBox vbox = DialogUtils.createDialogVBox();
+        vbox.setSpacing(12);
         vbox.setAlignment(Pos.CENTER_LEFT);
 
         Label label = DialogUtils.createLabel(header);
         TextField input = new TextField();
+        input.getStyleClass().add("dialog-input");
 
         Button confirmBtn = Buttons.create("Confirm", e -> {
             String text = input.getText().trim();
@@ -44,7 +43,11 @@ public class TextInputDialogBox {
 
         vbox.getChildren().addAll(label, input, buttons);
 
-        dialog.setScene(new Scene(vbox, 400, 200));
+        Scene scene = new Scene(vbox, 400, 200);
+        scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+        scene.getStylesheets().add(TextInputDialogBox.class.getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm());
+
+        dialog.setScene(scene);
         dialog.showAndWait();
     }
 }

@@ -1,0 +1,74 @@
+.root-background {
+    -fx-background-color: linear-gradient(to right, #A7C7E7, #F7C6C7);
+}
+
+.title-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3D1766;
+}
+
+.question-label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #333;
+}
+
+.menu-button {
+    -fx-background-color: #995FA3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-font-size: 14px;
+}
+
+/* Dialog background */
+.dialog-bg {
+    -fx-background-color: #F7C6C7;
+    -fx-padding: 20;
+    -fx-background-radius: 15;
+    -fx-border-color: #995FA3;
+    -fx-border-width: 3;
+    -fx-border-radius: 15;
+}
+
+/* Dialog labels */
+.dialog-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3D1766;
+}
+
+.dialog-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #3D1766;
+}
+
+.dialog-button {
+    -fx-background-color: #995FA3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+}
+.dialog-button:hover {
+    -fx-background-color: #7b3d94;
+}
+
+.dialog-input {
+    -fx-font-size: 14px;
+    -fx-padding: 8;
+    -fx-border-color: #995FA3;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-background-color: #FDEEF0;
+    -fx-text-fill: #3D1766;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
