@@ -11,9 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class RandomIdeaDialog {
@@ -38,9 +40,13 @@ public class RandomIdeaDialog {
         ideaLabel.getStyleClass().add("dialog-text");
 
         Button saveBtn = Buttons.create("Save Idea", e -> {
-            boolean saved = generator.addIdea(randomIdea.getActivity(), randomIdea.getCategory(), randomIdea.getDescription());
-            AlertBox.show(owner, saved ? "Saved" : "Error", saved ? "Idea saved successfully." : "Failed to save idea.");
-            dialog.close();
+            String error = generator.addIdea(randomIdea.getActivity(), randomIdea.getCategory(), randomIdea.getDescription());
+            if (error == null) {
+                AlertBox.show(owner, "Success", "New idea added!");
+                dialog.close();
+            } else {
+                AlertBox.show(owner, "Error", error);
+            }
         });
 
         Button closeBtn = Buttons.create("Close", e -> dialog.close());
@@ -51,8 +57,10 @@ public class RandomIdeaDialog {
         vbox.getChildren().addAll(ideaLabel, buttons);
 
         Scene scene = new Scene(vbox, 450, 250);
-        scene.getStylesheets().add(RandomIdeaDialog.class.getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm());
+        scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add(Objects.requireNonNull(RandomIdeaDialog.class.getResource("/com/example/oopprojekt/src/ui/style.css")).toExternalForm());
         dialog.setScene(scene);
+        dialog.showAndWait();
 
     }
 }

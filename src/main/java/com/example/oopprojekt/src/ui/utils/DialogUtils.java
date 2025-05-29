@@ -22,7 +22,7 @@ public class DialogUtils {
         VBox vbox = new VBox(12);
         vbox.setAlignment(Pos.CENTER_LEFT);
         vbox.getStyleClass().add("dialog-bg");
-        vbox.setPadding(new Insets(20)); // Optional, if not defined in CSS
+        vbox.setPadding(new Insets(20));
         return vbox;
     }
 

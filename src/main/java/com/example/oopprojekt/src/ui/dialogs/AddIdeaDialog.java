@@ -8,7 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class AddIdeaDialog {
 
@@ -43,9 +46,14 @@ public class AddIdeaDialog {
                 return;
             }
 
-            boolean success = generator.addIdea(activity, category, description);
-            AlertBox.show(owner, success ? "Success" : "Error", success ? "New idea added!" : "Failed to add idea.");
-            if (success) dialog.close();
+            String error = generator.addIdea(activity, category, description);
+
+            if (error == null) {
+                AlertBox.show(owner, "Success", "New idea added!");
+                dialog.close();
+            } else {
+                AlertBox.show(owner, "Error", error);
+            }
         });
 
         HBox buttons = new HBox(15, saveBtn, cancelBtn);
@@ -54,7 +62,8 @@ public class AddIdeaDialog {
         vbox.getChildren().addAll(activityLabel, activityField, categoryLabel, categoryBox, descLabel, descriptionArea, buttons);
 
         Scene scene = new Scene(vbox, 400, 400);
-        scene.getStylesheets().add(RandomIdeaDialog.class.getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm());
+        scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add(Objects.requireNonNull(RandomIdeaDialog.class.getResource("/com/example/oopprojekt/src/ui/style.css")).toExternalForm());
         dialog.setScene(scene);
         dialog.showAndWait();
 
