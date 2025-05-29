@@ -6,7 +6,6 @@ Piknik;;hangout;;Friends and chill;;true
 Miski;;date;;Miski;;false
 Hi;;date;;say hi;;false
 uusKatse;;date;;uus;;false
-miks;;date;;tere;;false
 Tere;;date;;tere;;false
 Tere1;;date;;tere;;false
 Escape room;;hangout;;Go to the new escape room together;;false

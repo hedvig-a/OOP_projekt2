@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ListDialog {
@@ -20,11 +21,13 @@ public class ListDialog {
     public static void show(Stage owner, String title, List<Idea> ideas) {
         Stage dialog = DialogUtils.createDialogStage(owner, title);
 
-        VBox vbox = DialogUtils.createDialogVBox(); // consistent style & padding
+        VBox vbox = DialogUtils.createDialogVBox();
+        vbox.getStyleClass().add("dialog-bg");
         vbox.setSpacing(16);
         vbox.setAlignment(Pos.CENTER_LEFT);
 
         Label titleLabel = DialogUtils.createLabel(title);
+        titleLabel.getStyleClass().add("dialog-label");
 
         Label contentLabel = new Label(ideas.isEmpty()
                 ? "No ideas found."
@@ -41,7 +44,8 @@ public class ListDialog {
         ScrollPane scrollPane = new ScrollPane(textContainer);
         scrollPane.setFitToWidth(true);
         scrollPane.setPrefHeight(300);
-        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+        scrollPane.setId("woody-scroll");
+        scrollPane.getStyleClass().add("scroll-pane");
 
         HBox buttonBox = new HBox(Buttons.create("Close", e -> dialog.close()));
         buttonBox.setAlignment(Pos.CENTER);
@@ -50,7 +54,7 @@ public class ListDialog {
 
         Scene scene = new Scene(vbox, 500, 450);
         scene.setFill(Color.TRANSPARENT);
-        scene.getStylesheets().add(ListDialog.class.getResource("/com/example/oopprojekt/src/ui/style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(RandomIdeaDialog.class.getResource("/com/example/oopprojekt/src/ui/style.css")).toExternalForm());
 
         dialog.setScene(scene);
         dialog.showAndWait();
